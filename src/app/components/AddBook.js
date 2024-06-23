@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const fieldMappings = {
   books: ["title", "author", "genre", "pages", "rating"],
@@ -11,6 +11,7 @@ export default function AddBookModal({
   onClose,
   onSubmit,
   collection,
+  initialData,
 }) {
   const [formData, setFormData] = useState({
     title: "",
@@ -20,6 +21,16 @@ export default function AddBookModal({
     progress: "",
     rating: "",
   });
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        title: initialData.title || "",
+        author: initialData.authors || "",
+      }));
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

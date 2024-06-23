@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
+import AddBookModal from "./AddBook";
 
 const SearchBooks = ({ addToCollection }) => {
   const [isbn, setIsbn] = useState("");
   const [bookInfo, setBookInfo] = useState(null);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [collection, setCollection] = useState("");
 
   const handleChange = (e) => {
     setIsbn(e.target.value);
@@ -15,7 +18,9 @@ const SearchBooks = ({ addToCollection }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://localhost:8080/isbn/search`, { isbn });
+      const response = await axios.post(`http://localhost:8080/isbn/search`, {
+        isbn,
+      });
 
       setBookInfo(response.data);
       setError(null);
@@ -27,7 +32,17 @@ const SearchBooks = ({ addToCollection }) => {
   };
 
   const handleAddToCollection = (collection) => {
-    addToCollection(bookInfo, collection);
+    setCollection(collection);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmitModal = (formData) => {
+    addToCollection(formData, collection);
+    closeModal();
     setBookInfo(null);
     setIsbn("");
   };
@@ -53,7 +68,7 @@ const SearchBooks = ({ addToCollection }) => {
           <h3>{bookInfo.title}</h3>
           <p>Author: {bookInfo.authors}</p>
           <div className="add-to-collections">
-            <button onClick={() => handleAddToCollection("read")}>
+            <button onClick={() => handleAddToCollection("books")}>
               Add to Read
             </button>
             <button onClick={() => handleAddToCollection("currently-reading")}>
@@ -65,6 +80,13 @@ const SearchBooks = ({ addToCollection }) => {
           </div>
         </div>
       )}
+      <AddBookModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={handleSubmitModal}
+        collection={collection}
+        initialData={bookInfo}
+      />
     </div>
   );
 };
