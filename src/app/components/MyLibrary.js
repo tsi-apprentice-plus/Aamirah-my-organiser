@@ -160,7 +160,7 @@ export default function MyLibrary() {
             </table>
           </div>
           <div className="Add1">
-            <button className="button" onClick={() => openModal("read")}>
+            <button className="button" onClick={() => openModal("books")}>
               Add
             </button>
           </div>
