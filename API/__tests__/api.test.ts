@@ -1,8 +1,8 @@
 import request from "supertest";
 import mongoose from "mongoose";
-import app from "../API/my-library/app";
+import app from "../my-library/app";
 import { beforeAll, afterAll, describe, it, expect } from "@jest/globals";
-import currentlyReadingModel from "../API/my-library/models/currentlyReadingModel";
+import currentlyReadingModel from "../my-library/models/currentlyReadingModel";
 const DB_URI = "mongodb://127.0.0.1:27017/my-library";
 
 beforeAll(async () => {
