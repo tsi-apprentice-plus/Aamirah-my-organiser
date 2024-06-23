@@ -3,7 +3,7 @@ import app from "./app";
 
 const PORT = 8080;
 
-const DB_URI = "mongodb://127.0.0.1:27017/my-library";
+const DB_URI = "mongodb://localhost:27017/my-library";
 
 mongoose
   .connect(DB_URI)
