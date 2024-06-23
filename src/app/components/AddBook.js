@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-export default function AddBookModal({
-  isOpen,
-  onClose,
-  onSubmit,
-  collection,
-}) {
+// Define the field mappings for each collection type
+const fieldMappings = {
+  read: ["title", "author", "genre", "pages", "rating"],
+  "currently-reading": ["title", "author", "genre", "pages", "progress"],
+  "want-to-read": ["title", "author", "genre", "pages"],
+};
+
+export default function AddBookModal({ isOpen, onClose, onSubmit, collection }) {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -26,7 +28,10 @@ export default function AddBookModal({
     onClose();
   };
 
-  if (!isOpen) return null;
+  // Ensure collection is defined and valid
+  if (!isOpen || !fieldMappings[collection]) return null;
+
+  const fields = fieldMappings[collection];
 
   return (
     <div className="modal">
@@ -34,76 +39,19 @@ export default function AddBookModal({
         <div className="bg-white p-4 rounded shadow-md">
           <h2 className="text-xl font-bold mb-4">Add to {collection}</h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-2">
-              <label className="block text-sm font-medium">Title</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium">Author</label>
-              <input
-                type="text"
-                name="author"
-                value={formData.author}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium">Genre</label>
-              <input
-                type="text"
-                name="genre"
-                value={formData.genre}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <label className="block text-sm font-medium">Pages</label>
-              <input
-                type="number"
-                name="pages"
-                value={formData.pages}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-                required
-              />
-            </div>
-            {collection === "currently-reading" && (
-              <div className="mb-2">
-                <label className="block text-sm font-medium">Progress</label>
+            {fields.map((field) => (
+              <div key={field} className="mb-2">
+                <label className="block text-sm font-medium">{field[0].toUpperCase() + field.slice(1)}</label>
                 <input
-                  type="text"
-                  name="progress"
-                  value={formData.progress}
+                  type={field === "pages" || field === "rating" || field === "progress" ? "number" : "text"}
+                  name={field}
+                  value={formData[field]}
                   onChange={handleChange}
                   className="w-full p-2 border rounded"
                   required
                 />
               </div>
-            )}
-            {collection === "books" && (
-              <div className="mb-2">
-                <label className="block text-sm font-medium">Rating</label>
-                <input
-                  type="number"
-                  name="rating"
-                  value={formData.rating}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                  required
-                />
-              </div>
-            )}
+            ))}
             <div className="flex justify-end mt-4">
               <button
                 type="button"
