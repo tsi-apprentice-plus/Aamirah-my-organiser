@@ -10,4 +10,3 @@ app.use(router);
 
 export default app;
 
-//test
