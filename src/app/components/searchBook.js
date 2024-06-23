@@ -15,7 +15,7 @@ const SearchBooks = ({ addToCollection }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/search", { isbn });
+      const response = await axios.post(`http://localhost:8080/isbn/search`, { isbn });
 
       setBookInfo(response.data);
       setError(null);
@@ -51,8 +51,7 @@ const SearchBooks = ({ addToCollection }) => {
       {bookInfo && (
         <div className="book-info">
           <h3>{bookInfo.title}</h3>
-          <p>Author: {bookInfo.author}</p>
-          <p>Description: {bookInfo.summary}</p>
+          <p>Author: {bookInfo.authors}</p>
           <div className="add-to-collections">
             <button onClick={() => handleAddToCollection("read")}>
               Add to Read
