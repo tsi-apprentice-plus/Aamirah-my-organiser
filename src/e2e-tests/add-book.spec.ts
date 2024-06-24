@@ -1,11 +1,12 @@
 import { test, expect } from "@playwright/test";
 
+const BASE_URL = "http://localhost:3000";
 test("should add a book to the Read category", async ({ page }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   await page.click("div.Add1 >> button.button");
 
-  const modalSelector = ".modal";
+  const modalSelector = ".modal-content";
 
   await page.fill(`${modalSelector} input[name="title"]`, "Test Book");
   await page.fill(`${modalSelector} input[name="author"]`, "Test Author");
@@ -27,11 +28,11 @@ test("should add a book to the Read category", async ({ page }) => {
 test("should add a book to the currently-reading category", async ({
   page,
 }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   await page.click("div.Add2 >> button.button");
 
-  const modalSelector = ".modal";
+  const modalSelector = ".modal-content";
 
   await page.fill(`${modalSelector} input[name="title"]`, "Test Book");
   await page.fill(`${modalSelector} input[name="author"]`, "Test Author");
@@ -51,11 +52,11 @@ test("should add a book to the currently-reading category", async ({
 });
 
 test("should add a book to the want-to-read category", async ({ page }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   await page.click("div.Add3 >> button.button");
 
-  const modalSelector = ".modal";
+  const modalSelector = ".modal-content";
 
   await page.fill(`${modalSelector} input[name="title"]`, "Test Book");
   await page.fill(`${modalSelector} input[name="author"]`, "Test Author");
@@ -75,11 +76,12 @@ test("should add a book to the want-to-read category", async ({ page }) => {
 test("delete the book with author 'Test Author' from the Read category", async ({
   page,
 }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   const bookRow = page.locator("div.table1 table tr", {
     hasText: "Test Author",
   });
+  await page.waitForTimeout(1000);
 
   await expect(bookRow).toBeVisible();
 
@@ -94,7 +96,7 @@ test("delete the book with author 'Test Author' from the Read category", async (
 test("delete the book with author 'Test Author' from the currently reading category", async ({
   page,
 }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   const bookRow = page.locator("div.table2 table tr", {
     hasText: "Test Author",
@@ -113,7 +115,7 @@ test("delete the book with author 'Test Author' from the currently reading categ
 test("delete the book with author 'Test Author' from the want to read category", async ({
   page,
 }) => {
-  await page.goto("/my-library");
+  await page.goto(`${BASE_URL}/my-library`);
 
   const bookRow = page.locator("div.table3 table tr", {
     hasText: "Test Author",

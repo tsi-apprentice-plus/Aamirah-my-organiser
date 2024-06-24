@@ -1,4 +1,6 @@
 {
   "/my-library/page": "app/my-library/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/to-do/page": "app/to-do/page.js",
+  "/my-recipes/page": "app/my-recipes/page.js"
 }
