@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 import app from "../my-library/app";
 import { beforeAll, afterAll, describe, it, expect } from "@jest/globals";
 import currentlyReadingModel from "../my-library/models/currentlyReadingModel";
-const DB_URI = "mongodb://127.0.0.1:27017/my-library";
+const DB_URI =
+  "mongodb+srv://mongo_db_service_user:5xDpmCoC0rsDceXf@cluster0.knsb4bc.mongodb.net/my-library?retryWrites=true&w=majority&appName=Cluster0";
 
 beforeAll(async () => {
   await mongoose.connect(DB_URI, {});

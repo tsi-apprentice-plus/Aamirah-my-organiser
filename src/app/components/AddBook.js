@@ -24,11 +24,11 @@ export default function AddBookModal({
 
   useEffect(() => {
     if (initialData) {
-      const { title, author } = initialData;
+      const { title, authors = [] } = initialData;
       setFormData((prevData) => ({
         ...prevData,
         title: title || "",
-        author: author || "",
+        author: Array.isArray(authors) ? authors.join(", ") : authors || "",
       }));
     }
   }, [initialData]);

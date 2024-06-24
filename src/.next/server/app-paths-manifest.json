@@ -1,6 +1,5 @@
 {
-  "/my-library/page": "app/my-library/page.js",
   "/page": "app/page.js",
-  "/to-do/page": "app/to-do/page.js",
-  "/my-recipes/page": "app/my-recipes/page.js"
+  "/my-library/page": "app/my-library/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
