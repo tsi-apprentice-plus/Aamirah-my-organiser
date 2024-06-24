@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - DB_URI=mongodb+srv://mongo_db_service_user:5xDpmCoC0rsDceXf@cluster0.knsb4bc.mongodb.net/my-library?retryWrites=true&w=majority&appName=Cluster0
+    
+
+  frontend:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
+    depends_on:
+      - backend
