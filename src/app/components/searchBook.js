@@ -67,6 +67,7 @@ const SearchBooks = ({ addToCollection }) => {
         <div className="book-info">
           <h3>{bookInfo.title}</h3>
           <p>Author: {bookInfo.authors}</p>
+          <p>Synopsis: {bookInfo.synopsis}</p>
           <div className="add-to-collections">
             <button onClick={() => handleAddToCollection("books")}>
               Add to Read
