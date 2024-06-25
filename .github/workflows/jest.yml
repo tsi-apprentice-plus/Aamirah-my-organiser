@@ -29,9 +29,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mongodb-mongosh mongodb-org-tools
 
-      - name: Load data into MongoDB
-        run: mongoimport --uri ${{ secrets.MONGODB_URI }} --collection posts --file ./mongo/socialAPI.posts.json --jsonArray
-
       - name: Install API Dependencies
         working-directory: API
         run: npm ci

@@ -43,6 +43,9 @@ jobs:
       - name: Install Frontend Dependencies
         run: npm ci
         working-directory: src
+    
+      - name: Install Playwright
+        run: npm playwright install
 
       - name: Run Playwright Tests
         run: npm test --prefix src  
