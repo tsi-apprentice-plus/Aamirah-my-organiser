@@ -1,28 +1,24 @@
-name: Playwright Tests
+name: Jest API Tests
 
 on:
   push:
     branches:
       - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     timeout-minutes: 60
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '16'  
+
 
       - name: Install mongosh
         run: |
@@ -33,23 +29,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mongodb-mongosh mongodb-org-tools
 
-      - name: Set MongoDB Atlas credentials
-        run: echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+      - name: Load data into MongoDB
+        run: mongoimport --uri ${{ secrets.MONGODB_URI }} --collection posts --file ./mongo/socialAPI.posts.json --jsonArray
 
-      - name: Install Backend Dependencies
-        run: npm ci
+      - name: Install API Dependencies
         working-directory: API
-
-      - name: Install Frontend Dependencies
         run: npm ci
-        working-directory: src
 
-      - name: Run Playwright Tests
-        run: npm test --prefix src  
+      - name: Run Jest API Tests
+        working-directory: API
+        run: npm test
 
-      - name: Upload Playwright Report
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: playwright-report
-          path: src/playwright-report/ 
+      
+      - name: Clean up MongoDB data
+        run: mongo ${{ secrets.MONGODB_URI }} --eval "db.posts.drop()"
+
