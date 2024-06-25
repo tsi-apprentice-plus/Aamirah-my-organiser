@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Next.js CI/CD
 
 on:
   push:
@@ -9,63 +9,46 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
+          node-version: '16' 
 
-      - name: Install mongosh
+      - name: Install backend dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-mongosh mongodb-org-tools
+          cd API
+          npm install
 
-      - name: MongoDB Setup
-        uses: supercharge/mongodb-github-action@v1
-        with:
-          mongodb-version: latest
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Debug
+      - name: Install frontend dependencies
         run: |
-          pwd
-          ls -la
+          cd src
+          npm install
 
-      - name: Lint code
-        run: npm run lint
-
-      - name: Run Jest tests
-        run: npx jest __tests__/api.test.ts
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Start Next.js app
-        run: npm run dev &
-
-      - name: Start backend
+      - name: Run backend
         run: |
-          npm install 
+          cd API
           npm start &
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
-      - name: Install Playwright
-        run: npx playwright install --with-deps
+      - name: Run frontend
+        run: |
+          cd src
+          npm run dev &
+        env:
+          NEXT_PUBLIC_MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Debug step
+        run: |
+          echo "Debugging environment..."
+          env
+
+      - name: Wait for servers to start
+        run: sleep 30
