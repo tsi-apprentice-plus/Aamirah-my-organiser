@@ -5,9 +5,9 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
-.src/node_modules
-./API/node_modules
-./src/node_modules
+src/node_modules
+API/node_modules
+
 # testing
 /coverage
 
