@@ -37,7 +37,5 @@ jobs:
         working-directory: API
         run: npm test
 
-      
-      - name: Clean up MongoDB data
-        run: mongo ${{ secrets.MONGODB_URI }} --eval "db.posts.drop()"
 
+        
