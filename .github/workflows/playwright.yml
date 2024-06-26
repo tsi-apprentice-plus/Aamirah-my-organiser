@@ -49,7 +49,7 @@ jobs:
         working-directory: API
 
       - name: Start Frontend
-        run: npm start &
+        run: npm run dev &
         working-directory: src
 
       - name: Install Playwright
