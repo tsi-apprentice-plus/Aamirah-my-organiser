@@ -27,7 +27,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./API
-          platforms: linux/amd64,linux/arm64
           file: API/Dockerfile
           push: true
           tags: ghcr.io/backend

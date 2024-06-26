@@ -44,13 +44,34 @@ jobs:
         run: npm ci
         working-directory: src
 
-      - name: Install Playwright
+      - name: Build Backend
+        run: npm run build
+        working-directory: API
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: src
+
+      - name: Start Backend
+        run: npm start &
+        working-directory: API
+
+      - name: Start Frontend
+        run: npm start &
+        working-directory: src
+
+      - name: Wait for services to be ready
         run: |
-          cd src
-          npx playwright install
+          while ! nc -z localhost 3000; do sleep 1; done
+          while ! nc -z localhost 8080; do sleep 1; done
+
+      - name: Install Playwright
+        run: npx playwright install
+        working-directory: src
 
       - name: Run Playwright Tests
-        run: npm test --prefix src
+        run: npm test
+        working-directory: src
 
       - name: Upload Playwright Report
         if: always()
