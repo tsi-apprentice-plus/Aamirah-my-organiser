@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import app from "./app";
-import { env } from "process";
+import 'dotenv/config';
 
+console.log('Loaded MONGODB_URI:', process.env.MONGODB_URI);  
 const PORT = 8080;
 
-const DB_URI =
-  "mongodb+srv://mongo_db_service_user:5xDpmCoC0rsDceXf@cluster0.knsb4bc.mongodb.net/my-library?retryWrites=true&w=majority&appName=Cluster0";
+const DB_URI = process.env.MONGODB_URI;
+
 if (!DB_URI) {
   throw new Error("MONGODB_URI environment variable is not defined");
 }
