@@ -45,7 +45,9 @@ jobs:
         working-directory: src
 
       - name: Install Playwright
-        run: npx playwright install
+        run: |
+          cd src
+          npx playwright install
 
       - name: Run Playwright Tests
         run: npm test --prefix src
