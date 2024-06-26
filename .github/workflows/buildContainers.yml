@@ -29,7 +29,7 @@ jobs:
           context: ./API
           file: API/Dockerfile
           push: true
-          tags: ghcr.io/AamirahP/backend
+          tags: ghcr.io/aamirahp/backend
           cache-from: type=gha
           cache-to: type=gha
 
@@ -57,6 +57,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: src/Dockerfile
           push: true
-          tags: ghcr.io/AamirahP/frontend
+          tags: ghcr.io/aamirahp/frontend
           cache-from: type=gha
           cache-to: type=gha
