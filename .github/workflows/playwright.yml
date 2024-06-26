@@ -52,11 +52,6 @@ jobs:
         run: npm start &
         working-directory: src
 
-      - name: Wait for services to be ready
-        run: |
-          while ! nc -z localhost 3000; do sleep 1; done
-          while ! nc -z localhost 8080; do sleep 1; done
-
       - name: Install Playwright
         run: npx playwright install
         working-directory: src
@@ -64,5 +59,3 @@ jobs:
       - name: Run Playwright Tests
         run: npm test
         working-directory: src
-
-      
