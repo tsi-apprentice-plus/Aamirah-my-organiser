@@ -30,7 +30,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: API/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:v1, ghcr.io/${{ github.repository }}/backend:latest
+          tags: ghcr.io/backend
           cache-from: type=gha
           cache-to: type=gha
 
@@ -58,6 +58,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           file: src/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:v1, ghcr.io/${{ github.repository }}/frontend:latest
+          tags: ghcr.io/frontend
           cache-from: type=gha
           cache-to: type=gha
