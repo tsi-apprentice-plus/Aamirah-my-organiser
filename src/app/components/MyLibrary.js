@@ -12,20 +12,20 @@ export default function MyLibrary() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const readResponse = await fetch("http://localhost:8080/books");
+        const readResponse = await fetch("http://api.aamirah.netbuildertraining.com/books");
         const readData = await readResponse.json();
         console.log("Read Books:", readData);
         setReadBooks(readData);
 
         const currentlyReadingResponse = await fetch(
-          "http://localhost:8080/currently-reading"
+          "http://api.aamirah.netbuildertraining.com/currently-reading"
         );
         const currentlyReadingData = await currentlyReadingResponse.json();
         console.log("Currently Reading:", currentlyReadingData);
         setCurrentlyReading(currentlyReadingData);
 
         const wantToReadResponse = await fetch(
-          "http://localhost:8080/want-to-read"
+          "http://api.aamirah.netbuildertraining.com/want-to-read"
         );
         const wantToReadData = await wantToReadResponse.json();
         console.log("Want to Read Books:", wantToReadData);
@@ -40,7 +40,7 @@ export default function MyLibrary() {
 
   const deleteBook = async (id, collection) => {
     try {
-      await fetch(`http://localhost:8080/${collection}/${id}`, {
+      await fetch(`http://api.aamirah.netbuildertraining.com/${collection}/${id}`, {
         method: "DELETE",
       });
       if (collection === "books") {
@@ -71,7 +71,7 @@ export default function MyLibrary() {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/currently-reading/${id}/move-to-read`,
+        `http://api.aamirah.netbuildertraining.com/currently-reading/${id}/move-to-read`,
         {
           method: "PUT",
           headers: {
@@ -103,7 +103,7 @@ export default function MyLibrary() {
   const addBook = async (formData) => {
     console.log("Adding book to collection:", collection, formData);
     try {
-      const response = await fetch(`http://localhost:8080/${collection}`, {
+      const response = await fetch(`http://api.aamirah.netbuildertraining.com/${collection}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -9,29 +9,6 @@ jobs:
   build-backend:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: AamirahP
-          password: ${{ secrets.GHCR_PAT }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./API
-          file: API/Dockerfile
-          push: true
-          tags: ghcr.io/aamirahp/backend
-          cache-from: type=gha
-          cache-to: type=gha
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -47,16 +24,16 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: AamirahP
-          password: ${{ secrets.GHCR_PAT }}
+          username: asharubendy
+          password: ${{ secrets.GHCR }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: ./src
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           file: src/Dockerfile
           push: true
-          tags: ghcr.io/aamirahp/frontend
+          tags: ghcr.io/asharubendy/aamirah-frontend:prod
           cache-from: type=gha
           cache-to: type=gha

@@ -18,7 +18,7 @@ const SearchBooks = ({ addToCollection }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://localhost:8080/isbn/search`, {
+      const response = await axios.post(`http://api.aamirah.netbuildertraining.com/isbn/search`, {
         isbn,
       });
 
